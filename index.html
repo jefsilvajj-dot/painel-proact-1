@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <!--
-  PAINEL PROACT (versão independente, v14)
+  PAINEL PROACT (versão independente, v15)
   Funciona em qualquer hospedagem de arquivo estático (GitHub Pages, Netlify, Firebase Hosting).
   Antes de usar, cole abaixo a configuração do seu projeto Firebase (bloco PROACT_CONFIG).
 -->
@@ -130,7 +130,7 @@ button,input,textarea,select{font:inherit;color:inherit}
 .area{display:grid;grid-template-columns:164px minmax(0,1fr);gap:12px 22px;padding:16px 18px}
 .area + .area{border-top:1px solid var(--line)}
 .area-h{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
-.area-nome{margin:0;font:700 23px/1 var(--font-display);letter-spacing:.06em;text-transform:uppercase}
+.area-nome{margin:0;font:700 23px/1 var(--font-display);letter-spacing:.06em;text-transform:uppercase;overflow-wrap:anywhere}
 .area-b{min-width:0}
 .st{
   display:inline-flex;align-items:center;gap:7px;font:600 12px var(--font-body);
@@ -229,6 +229,79 @@ textarea:focus{outline:2px solid var(--accent);outline-offset:0;background:var(-
 .campos label{font:600 11px var(--font-body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .campos input{background:var(--field);border:1px solid var(--line);border-radius:5px;padding:9px 12px;min-width:0}
 .dica{color:var(--muted);font-size:13px}
+/* v15: tópicos, sem representante, meta de OEE, linhas recolhíveis e administrador */
+.sync[data-k="noteam"] i{background:var(--crit)}
+.subtopics{margin-bottom:6px}
+.subhead{font:600 11px var(--font-body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.subgrid{display:flex;flex-wrap:wrap;gap:8px}
+.subopt{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:var(--field);cursor:pointer;line-height:1.25}
+.subopt input{margin:0;accent-color:var(--accent)}
+.subopt:has(input[value="Atendendo a meta"]:checked){border-color:var(--ok);background:var(--ok-bg);color:var(--ok)}
+.subopt:has(input[value="Fora da meta"]:checked){border-color:var(--crit);background:var(--crit-bg);color:var(--crit)}
+.occurrence{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.occurrence-comment,.incident-comment{display:flex;flex-direction:column;gap:4px;width:100%;margin:2px 0 6px}
+.occurrence-comment label,.incident-comment label{font:600 11px var(--font-body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.commentwrap{margin-top:10px;display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.commentbody{width:100%}
+.commentplus{padding:6px 12px;font-size:13px}
+.llsw{display:flex;flex-direction:column}
+.llsw-t{font-weight:600;padding:2px 0}
+.llsw .subrow{padding-left:12px}
+.llsw .subrow-title{min-width:90px;font-weight:500}
+.legacy{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:8px 10px;border:1px dashed var(--line);border-radius:6px;background:var(--field)}
+.semrep{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:6px 12px;border:1px dashed var(--line);border-radius:6px;color:var(--muted);font-weight:600;font-size:13px;cursor:pointer}
+.semrep input{margin:0;accent-color:var(--crit)}
+.semrep:has(input:checked){color:var(--crit);background:var(--crit-bg);border:1px solid var(--crit)}
+.area.semrep-on{box-shadow:inset 4px 0 0 var(--crit)}
+.oee[data-cor="ok"]{border-color:var(--ok)}
+.oee[data-cor="crit"]{border-color:var(--crit)}
+.oee-v input[data-cor="ok"]{color:var(--ok)}
+.oee-v input[data-cor="crit"]{color:var(--crit)}
+.oee-meta{font:600 12px var(--font-body);min-height:1.5em;color:var(--muted)}
+.oee-meta[data-cor="ok"]{color:var(--ok)}
+.oee-meta[data-cor="crit"]{color:var(--crit)}
+.tg{flex:0 0 auto;width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;padding:0;border:1px solid var(--line);border-radius:6px;background:var(--surface);cursor:pointer}
+.tg::before{content:"";width:8px;height:8px;border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:translateY(-2px) rotate(45deg);transition:transform .15s}
+.linha.min .tg::before{transform:translateX(-2px) rotate(-45deg)}
+.linha.min .area{display:none}
+.linha.min .linha-h{border-bottom:0}
+.linha-sum{display:none;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 18px 14px}
+.linha.min .linha-sum{display:flex}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:3px 10px 3px 8px;border-radius:999px;border:1px solid var(--line);background:var(--field);color:var(--muted);font:600 12px var(--font-body)}
+.chip::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+.chip[data-s=""]::before{background:transparent;border:1.5px solid currentColor}
+.chip[data-s="ok"]{color:var(--ok);background:var(--ok-bg);border-color:transparent}
+.chip[data-s="atencao"]{color:var(--warn);background:var(--warn-bg);border-color:transparent}
+.chip[data-s="critico"]{color:var(--crit);background:var(--crit-bg);border-color:transparent}
+.chip-sr{color:var(--crit)}
+.mini{font:500 12px var(--font-mono);color:var(--muted)}
+.mini[data-cor="ok"]{color:var(--ok)}
+.mini[data-cor="crit"]{color:var(--crit)}
+.tools{display:flex;flex-wrap:wrap;gap:8px}
+.btn.sm{padding:6px 11px;font-size:13px}
+.adm-tag{font:600 12px var(--font-body);color:var(--accent);padding:2px 9px;border:1px solid var(--accent);border-radius:999px}
+.arealist{display:flex;flex-direction:column;gap:8px}
+.area-i{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 14px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--field)}
+.area-i small{color:var(--muted)}
+.btn.dng.armed{background:var(--crit);color:#fff;border-color:var(--crit)}
+.campos textarea{overflow:auto;resize:vertical;min-height:5.5em}
+@media (max-width:640px){.subrow-title,.llsw .subrow-title{min-width:0;flex:1 1 100%}}
+
+/* v16: meta de OEE por linha (edição só no modo administrador) e campos sem zoom no celular */
+.oee-cfg{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:12px 0;padding:8px 12px;border:1px dashed var(--line);border-radius:6px;font-size:13px;color:var(--muted)}
+.oee-cfg b{color:var(--ink);font-weight:700}
+.oee-cfg-edit{display:none;align-items:center;flex-wrap:wrap;gap:6px 10px}
+.oee-cfg-edit label{font-weight:600;color:var(--ink)}
+.oee-cfg-in{display:inline-flex;align-items:baseline;gap:4px}
+.oee-cfg-in input{width:76px;box-sizing:border-box;padding:6px 8px;border:1px solid var(--line);border-radius:5px;background:var(--field);font:600 15px var(--font-mono);color:var(--ink);text-align:right}
+.oee-cfg-in input:focus{outline:2px solid var(--accent);outline-offset:0;background:var(--surface)}
+.oee-cfg-in span{font:500 15px var(--font-mono);color:var(--muted)}
+.oee-cfg .adm-nota{font-size:12px;color:var(--muted);flex:1 1 220px}
+body.is-adm .oee-cfg-edit{display:flex}
+body.is-adm .oee-cfg-txt{display:none}
+@media (pointer:coarse){
+  textarea,select,input:not([type=checkbox]):not([type=radio]):not([type=hidden]):not(.tema):not(.linha-num):not([data-num]){font-size:16px!important}
+}
 </style>
 
 </head><body>
@@ -254,6 +327,10 @@ window.PROACT_CONFIG={
       <span class="eu" id="eu"></span>
       <button type="button" class="lnk" id="trocar" hidden>Trocar nome ou equipe</button>
       <button type="button" class="lnk" id="linkEq" hidden>Copiar link da equipe</button>
+      <button type="button" class="lnk" id="admEntrar">Sou administrador</button>
+      <span class="adm-tag" id="admTag" hidden>Modo administrador</span>
+      <button type="button" class="lnk" id="admAreas" hidden>Gerenciar áreas</button>
+      <button type="button" class="lnk" id="admSair" hidden>Sair do modo administrador</button>
       <span class="sync" id="sync" data-k="loading" role="status"><i></i><span id="syncTxt">Conectando…</span></span>
     </div>
   </header>
@@ -266,8 +343,8 @@ window.PROACT_CONFIG={
       <label for="acCodigo">Código da equipe</label>
       <input id="acCodigo" maxlength="60" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Ex.: k7m2q9x4tp8w">
     </div>
-    <div class="turnos"><button class="btn pri" type="submit">Entrar</button><button class="btn" type="button" id="acGerar">Gerar código novo</button></div>
-    <p class="dica">Primeiro acesso: toque em Gerar código novo, entre e use Copiar link da equipe para enviar aos outros turnos. Quem tiver o link vê e edita tudo.</p>
+    <div class="turnos"><button class="btn pri" type="submit">Entrar</button><button class="btn" type="button" id="acGerar" hidden>Gerar código novo</button></div>
+    <p class="dica" id="acDica">Peça ao administrador o link ou o código da equipe. Quem tiver o link vê e edita tudo.</p>
   </form>
 
   <div class="resumo" aria-label="Resumo das áreas">
@@ -309,12 +386,41 @@ window.PROACT_CONFIG={
       <button class="btn" type="button" id="fimCancel">Cancelar</button>
     </div>
   </div>
+  <form class="painel" id="admBox" hidden>
+    <p><strong>Acesso do administrador.</strong> Só o administrador gera código de equipe e gerencia as áreas do painel.</p>
+    <div class="campos">
+      <label for="admSenha">Senha do administrador</label>
+      <input id="admSenha" type="password" autocomplete="current-password" maxlength="60">
+    </div>
+    <div class="turnos"><button class="btn pri" type="submit">Entrar como administrador</button><button class="btn" type="button" id="admCancel">Cancelar</button></div>
+  </form>
+
+  <div class="painel" id="novaEqBox" hidden>
+    <p><strong>Código novo.</strong> Ainda não existe uma equipe com o código <b id="novaEqCod"></b>. Criar uma equipe nova com este código? Ela começa sem linhas.</p>
+    <div class="turnos"><button class="btn pri" type="button" id="novaEqOk">Criar equipe</button><button class="btn" type="button" id="novaEqCancel">Cancelar</button></div>
+  </div>
+
+  <div class="painel" id="areasBox" hidden>
+    <p><strong>Áreas do painel.</strong> Uma área nova aparece em todas as linhas, com status, itens de seleção, observação e a opção de sem representante, igual às demais. As áreas padrão não podem ser removidas.</p>
+    <div class="arealist" id="areaLista"></div>
+    <form class="campos" id="areaForm">
+      <label for="areaNome">Nome da nova área</label>
+      <input id="areaNome" maxlength="30" autocomplete="off" placeholder="Ex.: PCP">
+      <label for="areaItens">Itens de seleção (opcional, um por linha)</label>
+      <textarea id="areaItens" rows="4" placeholder="Ex.:&#10;Falta de programação&#10;Mudança de prioridade"></textarea>
+      <div class="turnos"><button class="btn pri" type="submit">Adicionar área</button><button class="btn" type="button" id="areasFechar">Fechar</button></div>
+    </form>
+  </div>
 
   <p class="aviso" id="semImagem" role="status" hidden>Não foi possível gerar a imagem.</p>
 
   <p class="estado" id="estado">Carregando linhas…</p>
+  <div class="tools" id="tools" hidden>
+    <button type="button" class="btn sm" id="recolherTodas">Recolher todas</button>
+    <button type="button" class="btn sm" id="expandirTodas">Expandir todas</button>
+  </div>
   <main class="linhas" id="linhas"></main>
-  <p class="versao">Painel v14 · Versão independente com Firebase · Acesso por código da equipe</p>
+  <p class="versao">Painel v16 · Versão independente com Firebase · Acesso por código da equipe</p>
 </div>
 
 <div class="modal" id="imgModal" hidden role="dialog" aria-modal="true" aria-label="Imagem do relatório">
@@ -361,11 +467,39 @@ var rows=new Map(), pend=new Map();
 var store=null, readOnly=false, meta={}, loaded=false, focusNew=null, loadT=null, toastT=null, metaT=null;
 var db=null, rawdb=null, CODE='', uid=null, dayId=null, daySubs=[], cfgUnsub=null, criando=false, busyFim=false;
 var nomes={}, nomesPedidos={};
-var STATUS=['','ok','atencao','critico','sem_representante'];
+var STATUS=['','ok','atencao','critico'];
 var STATUS_TXT={'':'Sem status',ok:'OK',atencao:'Atenção',critico:'Crítico',sem_representante:'Sem representante da área'};
-var AREA_ST={seg_s:'Segurança',per_s:'Performance',qua_s:'Qualidade',man_s:'Manutenção',dep_s:'Depósito'};
+var SEMREP_TXT='Sem representante da área';
+var AREA_BASE=[['seg_s','Segurança'],['qua_s','Qualidade'],['per_s','Performance'],['man_s','Manutenção'],['dep_s','Depósito']];
+var AREAS=[], areasUnsub=null, areasJson='[]';
+var META_OEE=70;
+var MIN_KEY='proact-min';
+var minimizadas=(function(){try{var o=JSON.parse(lsGet(MIN_KEY)||'{}');return(o&&typeof o==='object')?o:{}}catch(e){return {}}})();
+function saveMin(){lsSet(MIN_KEY,JSON.stringify(minimizadas))}
+function podarMin(ids,fromCache){
+  if(fromCache)return;
+  var ch=false;
+  for(var k in minimizadas){if(!ids.has(k)){delete minimizadas[k];ch=true}}
+  if(ch)saveMin();
+}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function semAcento(s){return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')}
+function stOf(d,sk){var v=d[sk]||'';return v==='sem_representante'?'':v}
+function flagKey(sk){return sk.replace(/_s$/,'_semrep')}
+function semRep(d,sk){return !!d[flagKey(sk)]||d[sk]==='sem_representante'}
+function todasAreas(areas){
+  var l=AREA_BASE.map(function(a){return {sk:a[0],p:a[0].replace(/_s$/,''),nome:a[1],base:true,itens:[]}});
+  (areas||AREAS).forEach(function(a){l.push({sk:a.p+'_s',p:a.p,nome:a.nome,base:false,itens:a.itens||[]})});
+  return l;
+}
+function areaNome(sf){var a=todasAreas().filter(function(x){return x.sk===sf})[0];return a?a.nome:'Área'}
+function oeeNum(v){var n=parseFloat(String(v==null?'':v).replace(',','.'));return isNaN(n)?null:n}
+function metaDe(d){var n=oeeNum(d&&d.oee_meta);return(n!==null&&n>0&&n<=100)?n:META_OEE}
+function fmtMeta(n){return String(n).replace('.',',')}
+function oeeCor(v,m){var n=oeeNum(v);return n===null?'':(n>=(m==null?META_OEE:m)?'ok':'crit')}
+function oeeRot(v,m){var c=oeeCor(v,m);return c==='ok'?'Atendendo a meta':c==='crit'?'Fora da meta':''}
 var SYNC_TXT={loading:'Conectando…',saved:'Salvo e compartilhado',saving:'Salvando…',error:'Erro ao salvar',
-  nodb:'Sem acesso ao banco compartilhado',ro:'Somente leitura',slow:'Sem resposta do banco; dados podem estar desatualizados'};
+  nodb:'Sem acesso ao banco compartilhado',ro:'Somente leitura',slow:'Sem resposta do banco; dados podem estar desatualizados',noteam:'Equipe não encontrada'};
 var TURNOS={'3T':'3º turno','1T':'1º turno','2T':'2º turno',Geral:'Relatório geral do dia',Atual:'Situação atual'};
 
 $('hoje').textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
@@ -385,68 +519,117 @@ function autosize(t){
 }
 function resizeVisibleNotes(root){(root||box).querySelectorAll('textarea').forEach(autosize)}
 function setSt(b,v){
+  v=(v==='sem_representante')?'':(v||'');
   b.dataset.s=v;b.textContent=STATUS_TXT[v];
-  var nome=AREA_ST[b.dataset.sf]||'Área';
-  b.setAttribute('aria-label','Status de '+nome+': '+STATUS_TXT[v]+'. Toque para alterar.');
+  b.setAttribute('aria-label','Status de '+areaNome(b.dataset.sf)+': '+STATUS_TXT[v]+'. Toque para alterar.');
 }
 
-/* Seleção de subtópicos e comentários opcionais */
 /* ---------- Modelo da ficha (mesmo padrão para toda linha nova) ---------- */
+/* A chave (k) de cada tópico é gravada no banco e usada nos relatórios antigos: nunca renomear nem reaproveitar uma chave. */
+var LLSW_TURNOS=[['3t','3º turno'],['1t','1º turno'],['2t','2º turno']];
+var LLSW_OPTS=['Sim','Não','S/T'];
+var TOPICOS={
+ seg:[{k:'seg_item_0',r:'LSSW realizado?',t:'llsw'},
+      {k:'seg_item_1',r:'Algum incidente na linha?',t:'simnao',obs:'Observação sobre o incidente'}],
+ qua:[{k:'qua_item_0',r:'Material Bloqueado',t:'check',obs:1},
+      {k:'qua_item_1',r:'Prioridade para liberação de material',t:'check',obs:1},
+      {k:'qua_item_2',r:'Bloqueio de material não conforme',t:'check',obs:1}],
+ per:[{k:'per_item_0',r:'Performance do turno anterior',t:'meta',leg:1},
+      {k:'per_item_1',r:'Performance do turno atual',t:'meta'}],
+ man:[{k:'man_item_0',r:'Sem ocorrências',t:'check'},
+      {k:'man_item_3',r:'Quebra mecânica',t:'check',obs:1},
+      {k:'man_item_4',r:'Quebra elétrica',t:'check',obs:1},
+      {k:'man_item_5',r:'Utilidades',t:'check',obs:1},
+      {k:'man_item_1',r:'Quebra elétrica ou mecânica',t:'check',leg:1},
+      {k:'man_item_2',r:'Impacto atualmente?',t:'simnao'}],
+ dep:[{k:'dep_item_0',r:'Sem ocorrências',t:'check'},
+      {k:'dep_item_1',r:'Falta de material na planta',t:'check',obs:1},
+      {k:'dep_item_2',r:'Divergência de Saldo',t:'check',obs:1},
+      {k:'dep_item_3',r:'Material vencido',t:'check',obs:1}]
+};
+function topicosDe(prefix,areas){
+  if(TOPICOS[prefix])return TOPICOS[prefix];
+  var a=(areas||AREAS).filter(function(x){return x.p===prefix})[0];
+  return a?(a.itens||[]).map(function(r,i){return {k:prefix+'_item_'+i,r:r,t:'check',obs:1}}):[];
+}
 function fld(id,f,label,ph,n){
   return '<div class="fld"><label for="'+id+'-'+f+'">'+label+'</label><textarea id="'+id+'-'+f+'" data-f="'+f+'" rows="'+(n||2)+'" placeholder="'+ph+'"></textarea></div>';
 }
 function oee(id,vf,imp,label){
   var h='<div class="oee"><div class="fld"><label for="'+id+'-'+vf+'">'+label+'</label><div class="oee-v">'+
-    '<input id="'+id+'-'+vf+'" data-f="'+vf+'" data-num="1" inputmode="decimal" autocomplete="off" placeholder="—" maxlength="6"><span>%</span></div></div>';
+    '<input id="'+id+'-'+vf+'" data-f="'+vf+'" data-num="1" inputmode="decimal" autocomplete="off" placeholder="—" maxlength="6"><span>%</span></div>'+
+    '<div class="oee-meta" data-meta="'+vf+'"></div></div>';
   if(imp) h+=fld(id,imp,'Impactos','Impactos do turno',3);
   return h+'</div>';
 }
-function area(nome,sf,body){
-  return '<div class="area"><div class="area-h"><h2 class="area-nome">'+nome+'</h2><button type="button" class="st" data-sf="'+sf+'" data-s=""></button></div><div class="area-b">'+body+'</div></div>';
+function oeeCfg(id){
+  return '<div class="oee-cfg"><span class="oee-cfg-txt">Meta de OEE desta linha: <b data-metaval>70%</b></span>'+
+    '<span class="oee-cfg-edit"><label for="'+id+'-oee_meta">Meta de OEE desta linha</label>'+
+    '<span class="oee-cfg-in"><input id="'+id+'-oee_meta" data-metaset="1" inputmode="decimal" autocomplete="off" maxlength="5" placeholder="70"><span>%</span></span>'+
+    '<span class="adm-nota">Padrão 70%. Abaixo da meta fica vermelho; na meta ou acima, verde. Só o administrador altera.</span></span></div>';
 }
-var TOPICOS={
- seg:[['LSSW realizado?','simnao'],['Algum incidente na linha?','simnao']],
- qua:[['Material Bloqueado','check'],['Prioridade para liberação de material','check'],['Bloqueio de material não conforme','check']],
- per:[['Performance do turno anterior','meta'],['Performance do turno atual','meta']],
- man:[['Sem ocorrências','check'],['Quebra elétrica ou mecânica','check'],['Impacto atualmente?','simnao']],
- dep:[['Sem ocorrências','check'],['Falta de material na planta','check'],['Divergência de Saldo','check'],['Material vencido','check']]
-};
+function area(nome,sf,body){
+  var pf=sf.replace(/_s$/,''),cust=!AREA_BASE.some(function(a){return a[0]===sf});
+  return '<div class="area" data-area="'+sf+'"><div class="area-h"><h2 class="area-nome'+(cust?' cust':'')+'">'+nome+'</h2><button type="button" class="st" data-sf="'+sf+'" data-s=""></button></div><div class="area-b">'+body+
+    '<label class="semrep"><input type="checkbox" data-semrep="'+pf+'_semrep"> '+SEMREP_TXT+'</label></div></div>';
+}
+function legacyWrap(k,inner){
+  return '<div class="legacy" data-legacy="'+k+'" hidden>'+inner+'<button type="button" class="lnk" data-clear="'+k+'">Limpar registro antigo</button></div>';
+}
+function radiosHtml(id,k,choices){
+  return choices.map(function(c){return '<label class="subopt"><input type="radio" name="'+id+'-'+k+'" data-item="'+k+'" value="'+c+'"> '+c+'</label>'}).join('');
+}
+function itemHtml(id,it){
+  var k=it.k, r=esc(it.r), h;
+  if(it.t==='llsw'){
+    h='<div class="llsw"><div class="llsw-t">'+r+'</div>'+LLSW_TURNOS.map(function(t){
+      return '<div class="subrow"><span class="subrow-title">'+t[1]+'</span><div class="subgrid">'+radiosHtml(id,'seg_llsw_'+t[0],LLSW_OPTS)+'</div></div>';
+    }).join('');
+    h+=legacyWrap(k,'<div class="subrow"><span class="subrow-title">'+r+' (registro antigo)</span><div class="subgrid">'+radiosHtml(id,k,['Sim','Não'])+'</div></div>');
+    return h+'</div>';
+  }
+  if(it.t==='check'){
+    h='<label class="subopt"><input type="checkbox" data-item="'+k+'"> '+r+(it.leg?' (registro antigo)':'')+'</label>';
+    if(it.obs)h='<div class="occurrence">'+h+'<div class="occurrence-comment" hidden><label for="'+id+'-'+k+'_comment">Observação</label><textarea id="'+id+'-'+k+'_comment" data-f="'+k+'_comment" rows="2" placeholder="Descreva a observação"></textarea></div></div>';
+    return it.leg?legacyWrap(k,h):h;
+  }
+  var choices=(it.t==='meta')?['Atendendo a meta','Fora da meta']:['Sim','Não'];
+  h='<div class="subrow"><span class="subrow-title">'+r+(it.leg?' (registro antigo)':'')+'</span><div class="subgrid">'+radiosHtml(id,k,choices)+'</div></div>';
+  if(typeof it.obs==='string')h+='<div class="incident-comment" hidden><label for="'+id+'-'+k+'_comment">'+esc(it.obs)+'</label><textarea id="'+id+'-'+k+'_comment" data-f="'+k+'_comment" rows="2" placeholder="Descreva o incidente ocorrido"></textarea></div>';
+  return it.leg?legacyWrap(k,h):h;
+}
 function detalhes(id,prefix,comment){
- var opts=TOPICOS[prefix].map(function(entry,i){
-  var v=entry[0],tipo=entry[1],k=prefix+'_item_'+i;
-  if(tipo==='check'){
-   var control='<label class="subopt"><input type="checkbox" data-item="'+k+'"> '+v+'</label>';
-   if((prefix==='qua'||prefix==='dep')&&v!=='Sem ocorrências'){
-     control='<div class="occurrence">'+control+'<div class="occurrence-comment" hidden><label for="'+id+'-'+k+'_comment">Comentário sobre '+v+'</label><textarea id="'+id+'-'+k+'_comment" data-f="'+k+'_comment" rows="2" placeholder="Descreva a ocorrência, se necessário"></textarea></div></div>';
-   }
-   return control;
-  }
-  var choices=tipo==='oknok'?['OK','NOK']:tipo==='meta'?['Atendendo a meta','Fora da meta']:['Sim','Não'];
-  var radios='<div class="subrow"><span class="subrow-title">'+v+'</span><div class="subgrid">'+choices.map(function(c){return '<label class="subopt"><input type="radio" name="'+id+'-'+k+'" data-item="'+k+'" value="'+c+'"> '+c+'</label>'}).join('')+'</div></div>';
-  if(prefix==='seg'&&i===1){
-    radios+='<div class="incident-comment" hidden><label for="'+id+'-'+k+'_comment">Observação sobre o incidente</label><textarea id="'+id+'-'+k+'_comment" data-f="'+k+'_comment" rows="2" placeholder="Descreva o incidente ocorrido"></textarea></div>';
-  }
-  return radios;
- }).join('');
- return '<div class="subtopics"><div class="subhead">Selecione as opções aplicáveis</div><div class="subitems">'+opts+'</div></div>'+
- '<div class="commentwrap"><button type="button" class="btn commentplus" data-comment="'+prefix+'" aria-expanded="false">+ Adicionar observação</button><div class="commentbody" hidden>'+fld(id,comment,'Observação','Descreva a observação, se necessário',3)+'</div></div>';
+  var items=topicosDe(prefix);
+  var obs=fld(id,comment,'Observação','Descreva a observação, se necessário',3);
+  if(!items.length)return '<div class="commentbody">'+obs+'</div>';
+  return '<div class="subtopics"><div class="subhead">Selecione as opções aplicáveis</div><div class="subitems">'+items.map(function(it){return itemHtml(id,it)}).join('')+'</div></div>'+
+    '<div class="commentwrap"><button type="button" class="btn commentplus" data-comment="'+prefix+'" aria-expanded="false">+ Adicionar observação</button><div class="commentbody" hidden>'+obs+'</div></div>';
+}
+function setMin(el,min){
+  el.classList.toggle('min',!!min);
+  var b=el.querySelector('.tg');
+  if(b){b.setAttribute('aria-expanded',String(!min));b.setAttribute('aria-label',min?'Expandir linha':'Recolher linha')}
 }
 function build(id){
   var s=document.createElement('section');
   s.className='linha';s.dataset.id=id;
   s.innerHTML=
-    '<header class="linha-h"><div class="linha-t"><label for="'+id+'-linha">Ficha da linha</label>'+
+    '<header class="linha-h"><button type="button" class="tg" data-toggle="1" aria-expanded="true" aria-label="Recolher linha"></button>'+
+    '<div class="linha-t"><label for="'+id+'-linha">Ficha da linha</label>'+
     '<input class="linha-num" id="'+id+'-linha" data-f="linha" maxlength="8" autocomplete="off" placeholder="—"></div>'+
     '<span class="linha-meta"></span><button type="button" class="btn rm" data-rm="1">Remover linha</button></header>'+
+    '<div class="linha-sum" data-sum="1"></div>'+
     area('Segurança','seg_s',detalhes(id,'seg','seg_c'))+
     area('Qualidade','qua_s',detalhes(id,'qua','qua_c'))+
-    area('Performance','per_s',detalhes(id,'per','per_c')+'<div class="perf">'+
+    area('Performance','per_s',detalhes(id,'per','per_c')+oeeCfg(id)+'<div class="perf">'+
       oee(id,'oee_ant',null,'OEE dia anterior')+
       oee(id,'oee3_v','oee3_i','OEE 3T')+
       oee(id,'oee1_v','oee1_i','OEE 1T')+
       oee(id,'oee2_v','oee2_i','OEE 2T')+'</div>')+
     area('Manutenção','man_s',detalhes(id,'man','man_c'))+
-    area('Depósito','dep_s',detalhes(id,'dep','dep_c'));
+    area('Depósito','dep_s',detalhes(id,'dep','dep_c'))+
+    AREAS.map(function(a){return area(esc(a.nome),a.p+'_s',detalhes(id,a.p,a.p+'_c'))}).join('');
+  setMin(s,!!minimizadas[id]);
   return s;
 }
 
@@ -499,6 +682,48 @@ function metaTxt(d){
 }
 function refreshMeta(){rows.forEach(function(r){var m=r.el.querySelector('.linha-meta');if(m)m.textContent=metaTxt(r.data)})}
 function pedirNomes(list){list.forEach(function(d){if(d.por)nomes[d.por]=d.por});refreshMeta();return Promise.resolve()}
+function visib(row){
+  var d=row.data, el=row.el;
+  var incident=el.querySelector('.incident-comment');
+  if(incident){incident.hidden=d.seg_item_1!=='Sim';if(!incident.hidden)requestAnimationFrame(function(){resizeVisibleNotes(incident)})}
+  el.querySelectorAll('.occurrence').forEach(function(w){
+    var cb=w.querySelector('input[data-item]'), note=w.querySelector('.occurrence-comment');
+    if(note){note.hidden=!cb.checked;if(!note.hidden)requestAnimationFrame(function(){resizeVisibleNotes(note)})}
+  });
+  el.querySelectorAll('[data-legacy]').forEach(function(w){
+    var v=d[w.dataset.legacy];w.hidden=!(v===true||(typeof v==='string'&&v!==''));
+  });
+}
+function metaMostrar(row,t){var n=oeeNum(row.data.oee_meta);t.value=(n!==null&&n>0&&n<=100)?fmtMeta(n):''}
+function pintarOee(row){
+  var m=metaDe(row.data);
+  row.el.querySelectorAll('.oee').forEach(function(bx){
+    var inp=bx.querySelector('input[data-num]'),cap=bx.querySelector('.oee-meta');if(!inp)return;
+    var c=oeeCor(inp.value,m);
+    inp.dataset.cor=c;bx.dataset.cor=c;
+    if(cap){cap.dataset.cor=c;cap.textContent=oeeRot(inp.value,m)}
+  });
+  var cfg=row.el.querySelector('.oee-cfg');
+  if(cfg){
+    var bv=cfg.querySelector('[data-metaval]');if(bv)bv.textContent=fmtMeta(m)+'%';
+    var mi=cfg.querySelector('input[data-metaset]');
+    if(mi&&mi!==document.activeElement)metaMostrar(row,mi);
+  }
+}
+function resumoLinha(row){
+  var bx=row.el.querySelector('[data-sum]');if(!bx)return;
+  var d=row.data,h='',m=metaDe(d);
+  todasAreas().forEach(function(a){
+    var s=stOf(d,a.sk),sr=semRep(d,a.sk);
+    h+='<span class="chip" data-s="'+s+'">'+esc(a.nome)+(s?' · '+STATUS_TXT[s]:'')+(sr?' · <b class="chip-sr">sem representante</b>':'')+'</span>';
+  });
+  [['3T','oee3_v'],['1T','oee1_v'],['2T','oee2_v']].forEach(function(o){
+    var v=(d[o[1]]==null?'':String(d[o[1]])).trim();
+    h+='<span class="mini" data-cor="'+oeeCor(v,m)+'">OEE '+o[0]+' '+(v?esc(v)+'%':'—')+'</span>';
+  });
+  if(m!==META_OEE)h+='<span class="mini mini-meta" data-cor="">meta '+fmtMeta(m)+'%</span>';
+  bx.innerHTML=h;
+}
 function apply(row){
   var d=row.data;
   row.el.querySelectorAll('[data-f]').forEach(function(x){
@@ -510,31 +735,34 @@ function apply(row){
   row.el.querySelectorAll('[data-item]').forEach(function(x){
     var v=d[x.dataset.item];x.checked=x.type==='checkbox'?!!v:v===x.value;
   });
-  var incident=row.el.querySelector('.incident-comment');
-  if(incident){incident.hidden=d.seg_item_1!=='Sim';if(!incident.hidden)requestAnimationFrame(function(){resizeVisibleNotes(incident)});}
-  row.el.querySelectorAll('.occurrence').forEach(function(w){
-    var cb=w.querySelector('input[data-item]'), note=w.querySelector('.occurrence-comment');
-    if(note){note.hidden=!cb.checked;if(!note.hidden)requestAnimationFrame(function(){resizeVisibleNotes(note)});}
+  row.el.querySelectorAll('[data-semrep]').forEach(function(x){
+    var sk=x.dataset.semrep.replace(/_semrep$/,'_s'),on=semRep(d,sk);
+    x.checked=on;var a=x.closest('.area');if(a)a.classList.toggle('semrep-on',on);
   });
+  visib(row);
   row.el.querySelectorAll('[data-comment]').forEach(function(b){
     var prefix=b.dataset.comment, wrap=b.closest('.commentwrap'), body=wrap.querySelector('.commentbody');
     var isOpen=!!d[prefix+'_open'];
     body.hidden=!isOpen;b.setAttribute('aria-expanded',String(isOpen));
     b.textContent=isOpen?'− Ocultar observação':'+ Adicionar observação';
   });
-  row.el.querySelectorAll('[data-sf]').forEach(function(b){setSt(b,d[b.dataset.sf]||'')});
+  row.el.querySelectorAll('[data-sf]').forEach(function(b){setSt(b,stOf(d,b.dataset.sf))});
+  pintarOee(row);
+  resumoLinha(row);
   var m=row.el.querySelector('.linha-meta');if(m)m.textContent=metaTxt(d);
 }
 function lock(el){
   el.querySelectorAll('textarea,input').forEach(function(x){x.readOnly=readOnly});
-  el.querySelectorAll('input[type=checkbox],input[type=radio],button[data-comment]').forEach(function(x){x.disabled=readOnly});
+  el.querySelectorAll('input[type=checkbox],input[type=radio],button[data-comment],button[data-clear]').forEach(function(x){x.disabled=readOnly});
 }
 function stats(){
   var c={ok:0,atencao:0,critico:0};
-  rows.forEach(function(r){for(var k in AREA_ST){var v=r.data[k];if(c[v]!==undefined)c[v]++}});
+  var ks=todasAreas().map(function(a){return a.sk});
+  rows.forEach(function(r){ks.forEach(function(k){var v=stOf(r.data,k);if(c[v]!==undefined)c[v]++})});
   $('nLinhas').textContent=rows.size;$('nOk').textContent=c.ok;$('nAt').textContent=c.atencao;$('nCr').textContent=c.critico;
 }
 function showEstado(){
+  $('tools').hidden=!rows.size;
   if(rows.size){estado.hidden=true;return}
   estado.hidden=false;
   estado.textContent=loaded?'Nenhuma linha cadastrada. Digite o número da linha acima e toque em Adicionar linha.':'Carregando linhas…';
@@ -543,6 +771,7 @@ function focusRow(id){
   var row=rows.get(id);
   if(!row){focusNew=id;return}
   focusNew=null;
+  if(row.el.classList.contains('min')){setMin(row.el,false);delete minimizadas[id];saveMin()}
   var rd=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   row.el.scrollIntoView({behavior:rd?'auto':'smooth',block:'start'});
   var t=row.el.querySelector('textarea');if(t)t.focus({preventScroll:true});
@@ -562,7 +791,7 @@ function onLines(list,fromCache){
     apply(row);
   });
   pedirNomes(list);
-  stats();showEstado();
+  podarMin(ids,fromCache);stats();showEstado();
   if(focusNew&&rows.has(focusNew))focusRow(focusNew);
 }
 function onMeta(m){
@@ -619,64 +848,140 @@ async function diagnosticar(){
   setSync('error');estado.hidden=false;estado.textContent=msg;
   console.warn('Diagnóstico:',msg);
 }
+function equipeNaoEncontrada(){
+  if(dayId||criando)return;
+  setSync('noteam');estado.hidden=false;
+  if(isAdmin()){
+    estado.textContent='Ainda não existe uma equipe com este código.';
+    $('novaEqCod').textContent=CODE;$('novaEqBox').hidden=false;
+  }else{
+    estado.textContent='Código da equipe não encontrado. Confira o código ou peça o link correto ao administrador.';
+    lsSet('proact-codigo','');
+    mostrarAcesso();
+  }
+}
+function limparAreas(l){
+  var seen={},out=[];
+  (Array.isArray(l)?l:[]).forEach(function(a){
+    if(!a||typeof a.p!=='string'||!/^x[a-z0-9]{3,24}$/.test(a.p)||seen[a.p])return;
+    var nome=String(a.nome||'').trim().slice(0,30);if(!nome)return;
+    seen[a.p]=1;
+    out.push({p:a.p,nome:nome,itens:(Array.isArray(a.itens)?a.itens:[]).map(function(x){return String(x).trim().slice(0,60)}).filter(Boolean).slice(0,10),criadoEm:a.criadoEm||0});
+  });
+  return out;
+}
+function setAreas(l){
+  l=limparAreas(l);
+  var j=JSON.stringify(l.map(function(a){return [a.p,a.nome,a.itens]}));
+  if(j===areasJson)return;
+  areasJson=j;AREAS=l;
+  rows.forEach(function(r){var n=build(r.data.id);r.el.replaceWith(n);r.el=n;lock(n);apply(r)});
+  stats();renderAreasBox();
+}
+function observarAreas(){
+  if(areasUnsub){areasUnsub();areasUnsub=null}
+  areasUnsub=db.doc('config/areas').onSnapshot(function(s){
+    setAreas(s.exists&&s.data()?s.data().lista:[]);
+  },function(e){console.warn('Áreas:',e)});
+}
 function observarConfig(){
   clearTimeout(cfgT);cfgT=setTimeout(diagnosticar,10000);
+  observarAreas();
   cfgUnsub=db.doc('config/atual').onSnapshot(function(s){
     if(!s.metadata.fromCache)clearTimeout(cfgT);
     var id=s.exists&&s.data()&&s.data().diaId;
     if(id){
+      $('novaEqBox').hidden=true;
       if(id!==dayId){var troca=!!dayId;abrirDia(id);if(troca)toast('Novo dia aberto. O relatório do dia anterior está no Histórico.')}
       return;
     }
     if(s.metadata.fromCache)return;
     if(readOnly){if(!dayId)abrirDia(isoHoje());return}
-    criarPrimeiroDia();
+    equipeNaoEncontrada();
   },onErr);
 }
 
 /* ---------- Eventos ---------- */
+function metaInput(t,final){
+  var sec=t.closest('.linha'),row=sec&&rows.get(sec.dataset.id);
+  if(!row||readOnly)return;
+  if(!isAdmin()){metaMostrar(row,t);return}
+  var orig=t.value,raw=orig.replace(/[^0-9.,]/g,'');
+  if(raw!==orig)t.value=raw;
+  if(raw===''&&orig!==''){if(final){toast('Informe uma meta de OEE entre 1 e 100.');metaMostrar(row,t)}return}
+  var txt=raw.replace(',','.'),n=txt===''?null:parseFloat(txt),val;
+  if(txt===''){val=''}
+  else if(isNaN(n)||n<=0||n>100){
+    if(final){toast('Informe uma meta de OEE entre 1 e 100.');metaMostrar(row,t)}
+    return;
+  }else val=String(n);
+  if((row.data.oee_meta||'')===val&&!final)return;
+  row.data.oee_meta=val;
+  pintarOee(row);resumoLinha(row);
+  queueSave(sec.dataset.id,{oee_meta:val},final?50:800);
+}
 box.addEventListener('input',function(e){
   var t=e.target,f=t.dataset&&t.dataset.f;
+  if(t.dataset&&t.dataset.metaset!==undefined){metaInput(t,false);return}
   if(!f||readOnly)return;
   var sec=t.closest('.linha'),id=sec.dataset.id,row=rows.get(id);
   if(!row)return;
-  if(t.dataset.num)t.value=t.value.replace(/[^0-9.,]/g,'');
+  if(t.dataset.num){t.value=t.value.replace(/[^0-9.,]/g,'');pintarOee(row)}
   if(t.tagName==='TEXTAREA')autosize(t);
   row.data[f]=t.value;
   var p={};p[f]=t.value;queueSave(id,p);
   if(f==='linha')sec.setAttribute('aria-label','Linha '+t.value);
 });
 box.addEventListener('change',function(e){
- var t=e.target;if(!t.dataset.item||readOnly)return;
- var sec=t.closest('.linha'),row=rows.get(sec.dataset.id);if(!row)return;
- var k=t.dataset.item,v=t.type==='checkbox'?t.checked:t.value;
+ var t=e.target;if(readOnly)return;
+ var sec=t.closest('.linha');if(!sec)return;
+ var row=rows.get(sec.dataset.id);if(!row)return;
  var patch={};
- if((k==='man_item_0'||k==='dep_item_0')&&v){
-   var prefix=k.split('_')[0];
-   sec.querySelectorAll('[data-item^="'+prefix+'_item_"]').forEach(function(x){
-     if(x.dataset.item===k)return;
-     x.checked=false;row.data[x.dataset.item]=false;patch[x.dataset.item]=false;
-   });
- }else if(v){
-   var prefix2=k.split('_')[0];
-   if(prefix2==='man'||prefix2==='dep'){
-     var noKey=prefix2+'_item_0';row.data[noKey]=false;patch[noKey]=false;
-     var no=sec.querySelector('[data-item="'+noKey+'"]');if(no)no.checked=false;
+ if(t.dataset.metaset!==undefined){metaInput(t,true);return}
+ if(t.dataset.semrep){
+   var fk=t.dataset.semrep,sk=fk.replace(/_semrep$/,'_s');
+   if(row.data[sk]==='sem_representante'){row.data[sk]='';patch[sk]=''}
+   row.data[fk]=t.checked;patch[fk]=t.checked;
+   apply(row);queueSave(sec.dataset.id,patch,100);
+   return;
+ }
+ if(!t.dataset.item)return;
+ var k=t.dataset.item,v=t.type==='checkbox'?t.checked:t.value;
+ var m=/^(man|dep)_item_(\d+)$/.exec(k);
+ if(m){
+   var pf=m[1],zero=pf+'_item_0';
+   if(k===zero&&v){
+     sec.querySelectorAll('[data-item^="'+pf+'_item_"]').forEach(function(x){
+       if(x.dataset.item===k)return;
+       x.checked=false;row.data[x.dataset.item]=false;patch[x.dataset.item]=false;
+     });
+   }else if(v){
+     row.data[zero]=false;patch[zero]=false;
+     var no=sec.querySelector('[data-item="'+zero+'"]');if(no)no.checked=false;
    }
  }
  row.data[k]=v;patch[k]=v;
- var incident=sec.querySelector('.incident-comment');
- if(incident){incident.hidden=row.data.seg_item_1!=='Sim';if(!incident.hidden)requestAnimationFrame(function(){resizeVisibleNotes(incident)});}
- sec.querySelectorAll('.occurrence').forEach(function(w){
-   var cb=w.querySelector('input[data-item]'), note=w.querySelector('.occurrence-comment');
-   if(note){note.hidden=!cb.checked;if(!note.hidden)requestAnimationFrame(function(){resizeVisibleNotes(note)});}
- });
+ visib(row);
  queueSave(sec.dataset.id,patch,100);
 });
+function alternarLinha(row){
+  var min=!row.el.classList.contains('min');
+  setMin(row.el,min);
+  if(min)minimizadas[row.data.id]=1;else delete minimizadas[row.data.id];
+  saveMin();
+  if(!min)requestAnimationFrame(function(){resizeVisibleNotes(row.el)});
+}
 box.addEventListener('click',function(e){
-  var b=e.target.closest('button');if(!b||readOnly)return;
+  var b=e.target.closest('button');if(!b)return;
   var sec=b.closest('.linha');if(!sec)return;
   var id=sec.dataset.id,row=rows.get(id);if(!row)return;
+  if(b.dataset.toggle){alternarLinha(row);return}
+  if(readOnly)return;
+  if(b.dataset.clear){
+    var ck=b.dataset.clear,nv=(typeof row.data[ck]==='boolean')?false:'',pc={};
+    row.data[ck]=nv;pc[ck]=nv;apply(row);queueSave(id,pc,100);
+    return;
+  }
   if(b.dataset.comment){
     var prefix=b.dataset.comment, k=prefix+'_open', isOpen=!row.data[k];
     row.data[k]=isOpen;var patch={};patch[k]=isOpen;queueSave(id,patch,100);
@@ -687,10 +992,12 @@ box.addEventListener('click',function(e){
     return;
   }
   if(b.dataset.sf){
-    var cur=row.data[b.dataset.sf]||'';
+    var sf=b.dataset.sf,p={};
+    if(row.data[sf]==='sem_representante'){row.data[sf]='';p[sf]='';row.data[flagKey(sf)]=true;p[flagKey(sf)]=true}
+    var cur=row.data[sf]||'';
     var nx=STATUS[(STATUS.indexOf(cur)+1)%STATUS.length];
-    row.data[b.dataset.sf]=nx;setSt(b,nx);stats();
-    var p={};p[b.dataset.sf]=nx;queueSave(id,p,50);
+    row.data[sf]=nx;p[sf]=nx;setSt(b,nx);stats();resumoLinha(row);
+    queueSave(id,p,50);
     return;
   }
   if(b.dataset.rm){
@@ -704,6 +1011,13 @@ box.addEventListener('click',function(e){
     b.dataset.armed='1';b.textContent='Confirmar remoção';b.classList.add('armed');
     b._t=setTimeout(function(){b.dataset.armed='';b.textContent='Remover linha';b.classList.remove('armed')},4000);
   }
+});
+$('recolherTodas').addEventListener('click',function(){
+  rows.forEach(function(r){setMin(r.el,true);minimizadas[r.data.id]=1});saveMin();
+});
+$('expandirTodas').addEventListener('click',function(){
+  rows.forEach(function(r){setMin(r.el,false);delete minimizadas[r.data.id]});saveMin();
+  requestAnimationFrame(function(){resizeVisibleNotes(box)});
 });
 box.addEventListener('focusout',function(e){
   var sec=e.target.closest&&e.target.closest('.linha');if(!sec)return;
@@ -734,35 +1048,54 @@ function linhasAtuais(){
 }
 function snapAtual(turno){
   return {tipo:turno==='Atual'?'atual':turno==='Geral'?'geral':'turno',turno:turno,rotulo:TURNOS[turno]||turno,
-    criadoEm:Date.now(),por:uid||'',dia:dayId,tema:$('tema').value||'',linhas:linhasAtuais()};
+    criadoEm:Date.now(),por:uid||'',dia:dayId,tema:$('tema').value||'',
+    areas:AREAS.map(function(a){return {p:a.p,nome:a.nome,itens:a.itens}}),linhas:linhasAtuais()};
 }
-function selecionados(d,prefix){
- return (TOPICOS[prefix]||[]).map(function(entry,i){
-   var v=d[prefix+'_item_'+i];
-   if(v===true){
-     var note=(d[prefix+'_item_'+i+'_comment']||'').trim();
-     return entry[0]+(note?' — Comentário: '+note:'');
-   }
-   if(typeof v==='string'&&v){var extra=(prefix==='seg'&&i===1&&v==='Sim')?(d[prefix+'_item_'+i+'_comment']||'').trim():'';return entry[0]+': '+v+(extra?' — Observação: '+extra:'');}
-   return null;
- }).filter(Boolean);
+function selecionados(d,prefix,areas){
+  var out=[];
+  topicosDe(prefix,areas).forEach(function(it){
+    var v=d[it.k];
+    if(it.t==='llsw'){
+      var parts=LLSW_TURNOS.map(function(t){var x=d['seg_llsw_'+t[0]];return x?t[1]+': '+x:null}).filter(Boolean);
+      if(parts.length)out.push(it.r+' — '+parts.join(' · '));
+      if(typeof v==='string'&&v)out.push(it.r+' (registro antigo): '+v);
+      return;
+    }
+    if(v===true){
+      var note=(d[it.k+'_comment']||'').trim();
+      out.push(it.r+(note?' — Comentário: '+note:''));
+      return;
+    }
+    if(typeof v==='string'&&v){
+      var extra=(typeof it.obs==='string'&&v==='Sim')?(d[it.k+'_comment']||'').trim():'';
+      out.push(it.r+': '+v+(extra?' — Observação: '+extra:''));
+    }
+  });
+  return out;
 }
 function resumo(sn){
+  var areas=sn.areas||[];
   var L=['Tema: '+(sn.tema||''),'Data: '+new Date(sn.criadoEm).toLocaleDateString('pt-BR')+' '+hhmm(sn.criadoEm),'Relatório: '+sn.rotulo];
   sn.linhas.forEach(function(d){
     var g=function(k){return (d[k]==null?'':String(d[k])).trim()};
-    var pct=function(k){var v=g(k);return v?v+'%':''};
-    var st=function(k){if(d[k])L.push('Status: '+STATUS_TXT[d[k]])};
-    var subt=function(k){var a=selecionados(d,k);if(a.length)L.push('Subtópicos: '+a.join(', '))};
+    var m=metaDe(d);
+    var pct=function(k){var v=g(k);return v?v+'%'+(oeeRot(v,m)?' ('+oeeRot(v,m)+')':''):''};
+    var st=function(k){var s=stOf(d,k);if(s)L.push('Status: '+STATUS_TXT[s]);if(semRep(d,k))L.push(SEMREP_TXT)};
+    var subt=function(k){var a=selecionados(d,k,areas);if(a.length)L.push('Subtópicos: '+a.join(', '))};
     L.push('','Linha: '+g('linha'),'','Segurança:');st('seg_s');subt('seg');
     if(g('seg_c'))L.push('Comentário: '+g('seg_c'));L.push('','Qualidade:');st('qua_s');subt('qua');
     if(g('qua_c'))L.push('Comentário: '+g('qua_c'));L.push('','Performance');st('per_s');subt('per');if(g('per_c'))L.push('Comentário: '+g('per_c'));
+    if(m!==META_OEE)L.push('Meta de OEE: '+fmtMeta(m)+'%');
     L.push('Oee dia anterior: '+pct('oee_ant'),
       'Oee 3T: '+pct('oee3_v'),'Impactos: '+g('oee3_i'),
       'Oee 1T: '+pct('oee1_v'),'Impactos: '+g('oee1_i'),
       'Oee 2T: '+pct('oee2_v'),'Impactos: '+g('oee2_i'),'','Manutenção');st('man_s');
     subt('man');if(g('man_c'))L.push('Comentário: '+g('man_c'));L.push('','Depósito');st('dep_s');subt('dep');
     if(g('dep_c'))L.push('Comentário: '+g('dep_c'));
+    areas.forEach(function(a){
+      L.push('',a.nome);st(a.p+'_s');subt(a.p);
+      if(g(a.p+'_c'))L.push('Comentário: '+g(a.p+'_c'));
+    });
   });
   return L.join('\n');
 }
@@ -778,7 +1111,7 @@ $('txtClose').addEventListener('click',function(){$('txtModal').hidden=true});
 /* ---------- Imagem: desenhada direto no canvas (sem PDF, sem bibliotecas externas) ---------- */
 var IW=1080, IM=40, ILBL=250, IPX=24, IPY=22, IFS=27, ILH=38, MAXH=9000;
 var FONT='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-var IC={ink:'#15201C',mut:'#5A6A63',ln:'#D2DAD6',fl:'#F1F4F2',bg:'#FFFFFF',acc:'#1B5E8A'};
+var IC={ink:'#15201C',mut:'#5A6A63',ln:'#D2DAD6',fl:'#F1F4F2',bg:'#FFFFFF',acc:'#1B5E8A',ok:'#1E7A4B',crit:'#B3261E'};
 var SCOL={'':'#5A6A63',ok:'#1E7A4B',atencao:'#A86200',critico:'#B3261E',sem_representante:'#5c6470'};
 var imgFiles=[], imgUrls=[], imgSnap=null;
 
@@ -801,9 +1134,10 @@ function wrapTxt(ctx,text,maxW){
 }
 
 /* Desenha (draw=true) ou apenas mede (draw=false) a ficha de uma linha. Retorna a altura. */
-function paintLinha(ctx,d,draw){
+function paintLinha(ctx,d,draw,areas){
   var y=0, CWD=IW-2*IM, RX=IM+ILBL, RW=CWD-ILBL, TX=RX+IPX, TW=RW-2*IPX;
   var F=IFS+'px '+FONT;
+  var M=metaDe(d),MC=(M!==META_OEE);
   function g(k){return (d[k]==null?'':String(d[k])).trim()}
   function txt(s,x,yy,font,color){if(!draw)return;ctx.font=font;ctx.fillStyle=color;ctx.textBaseline='top';ctx.fillText(s,x,yy)}
   function rect(x,yy,w,h,color){if(!draw)return;ctx.fillStyle=color;ctx.fillRect(x,yy,w,h)}
@@ -819,21 +1153,29 @@ function paintLinha(ctx,d,draw){
 
   function row(nome,sk,prefix,extraH,extraFn){
     ctx.font=F;
-    var paras=selecionados(d,prefix).map(function(s){return '• '+s});
+    var paras=selecionados(d,prefix,areas).map(function(s){return '• '+s});
     if(g(prefix+'_c'))paras.push('Comentário: '+g(prefix+'_c'));
     var lines=[];paras.forEach(function(p){lines=lines.concat(wrapTxt(ctx,p,TW))});
-    var s=d[sk]||'';
+    var s=stOf(d,sk), sr=semRep(d,sk);
     ctx.font='700 24px '+FONT;
     var sl=wrapTxt(ctx,STATUS_TXT[s]||'Sem status',ILBL-IPX*2-26);
-    var leftH=IPY+36+12+sl.length*30+IPY;
+    var rl=sr?wrapTxt(ctx,SEMREP_TXT,ILBL-IPX*2-26):[];
+    var nf=27;ctx.font='700 '+nf+'px '+FONT;
+    while(nf>16&&ctx.measureText(nome).width>ILBL-IPX*2){nf--;ctx.font='700 '+nf+'px '+FONT}
+    var leftH=IPY+36+12+sl.length*30+(rl.length?12+rl.length*30:0)+IPY;
     var th=lines.length?lines.length*ILH:ILH;
     var h=Math.max(leftH,IPY*2+th+(extraH?extraH+16:0));
     if(draw){
       rect(IM,y,ILBL,h,IC.fl);rect(IM,y,8,h,SCOL[s]);
-      txt(nome,IM+IPX,y+IPY,'700 27px '+FONT,IC.ink);
+      txt(nome,IM+IPX,y+IPY,'700 '+nf+'px '+FONT,IC.ink);
       ctx.fillStyle=SCOL[s];ctx.beginPath();ctx.arc(IM+IPX+8,y+IPY+36+12+15,8,0,Math.PI*2);
       if(s)ctx.fill();else{ctx.lineWidth=2.5;ctx.strokeStyle=SCOL[s];ctx.stroke()}
       sl.forEach(function(l,i){txt(l,IM+IPX+26,y+IPY+36+12+i*30,'700 24px '+FONT,SCOL[s])});
+      if(rl.length){
+        var ry=y+IPY+36+12+sl.length*30+12;
+        ctx.fillStyle=IC.crit;ctx.beginPath();ctx.arc(IM+IPX+8,ry+15,8,0,Math.PI*2);ctx.fill();
+        rl.forEach(function(l,i){txt(l,IM+IPX+26,ry+i*30,'700 24px '+FONT,IC.crit)});
+      }
       if(lines.length)lines.forEach(function(l,i){txt(l,TX,y+IPY+i*ILH,F,IC.ink)});
       else txt('Sem registro',TX,y+IPY,'italic '+F,IC.mut);
       rect(IM,y+h-2,CWD,2,IC.ln);
@@ -843,19 +1185,21 @@ function paintLinha(ctx,d,draw){
   }
 
   function oeeH(cw,ik){
-    if(!ik)return 100;
+    if(!ik)return 134;
     ctx.font='24px '+FONT;
-    return 128+wrapTxt(ctx,g(ik)||'—',cw-32).length*32+16;
+    return 158+wrapTxt(ctx,g(ik)||'—',cw-32).length*32+16;
   }
   function oeeBox(x,yy,w,h,label,vk,ik){
     if(!draw)return;
-    ctx.strokeStyle=IC.ln;ctx.lineWidth=2;ctx.strokeRect(x,yy,w,h);
+    var c=oeeCor(g(vk),M),col=c==='ok'?IC.ok:c==='crit'?IC.crit:IC.ink;
+    ctx.strokeStyle=c==='ok'?IC.ok:c==='crit'?IC.crit:IC.ln;ctx.lineWidth=2;ctx.strokeRect(x,yy,w,h);
     txt(label,x+16,yy+14,'700 20px '+FONT,IC.mut);
-    txt(g(vk)?g(vk)+'%':'—',x+16,yy+42,'700 44px '+FONT,IC.ink);
+    txt(g(vk)?g(vk)+'%':'—',x+16,yy+42,'700 44px '+FONT,col);
+    if(c)txt(oeeRot(g(vk),M),x+16,yy+96,'700 22px '+FONT,col);
     if(ik){
-      txt('IMPACTOS',x+16,yy+104,'700 18px '+FONT,IC.mut);
+      txt('IMPACTOS',x+16,yy+134,'700 18px '+FONT,IC.mut);
       ctx.font='24px '+FONT;
-      wrapTxt(ctx,g(ik)||'—',w-32).forEach(function(l,i){txt(l,x+16,yy+128+i*32,'24px '+FONT,IC.ink)});
+      wrapTxt(ctx,g(ik)||'—',w-32).forEach(function(l,i){txt(l,x+16,yy+158+i*32,'24px '+FONT,IC.ink)});
     }
   }
   var cw=(TW-16)/2;
@@ -864,7 +1208,10 @@ function paintLinha(ctx,d,draw){
 
   row('SEGURANÇA','seg_s','seg');
   row('QUALIDADE','qua_s','qua');
-  row('PERFORMANCE','per_s','per',h1+16+h2,function(x,yy){
+  var mh=MC?38:0;
+  row('PERFORMANCE','per_s','per',mh+h1+16+h2,function(x,yy){
+    if(MC)txt('META DE OEE DA LINHA: '+fmtMeta(M)+'%',x,yy,'700 21px '+FONT,IC.mut);
+    yy+=mh;
     oeeBox(x,yy,cw,h1,'OEE DIA ANTERIOR','oee_ant',null);
     oeeBox(x+cw+16,yy,cw,h1,'OEE 3T','oee3_v','oee3_i');
     oeeBox(x,yy+h1+16,cw,h2,'OEE 1T','oee1_v','oee1_i');
@@ -872,6 +1219,7 @@ function paintLinha(ctx,d,draw){
   });
   row('MANUTENÇÃO','man_s','man');
   row('DEPÓSITO','dep_s','dep');
+  (areas||[]).forEach(function(a){row(String(a.nome).toUpperCase(),a.p+'_s',a.p)});
   return y;
 }
 
@@ -890,8 +1238,8 @@ async function gerarImagens(sn){
   var scratch=document.createElement('canvas').getContext('2d');
 
   var cards=list.map(function(d){
-    var h=Math.ceil(paintLinha(scratch,d,false))+GAP;
-    var p=mkCanvas(h);paintLinha(p[1],d,true);return p[0];
+    var h=Math.ceil(paintLinha(scratch,d,false,sn.areas||[]))+GAP;
+    var p=mkCanvas(h);paintLinha(p[1],d,true,sn.areas||[]);return p[0];
   });
   var pages=[],cur=[],curH=HH+FH;
   cards.forEach(function(c){
@@ -1093,6 +1441,133 @@ $('histLista').addEventListener('click',function(e){
 
 var rz=null;
 window.addEventListener('resize',function(){clearTimeout(rz);rz=setTimeout(function(){resizeVisibleNotes(box)},150)});
+/* ---------- Administrador: senha, código novo e áreas ----------
+   A senha fica no arquivo apenas como resumo (hash). Isto limita o que aparece na tela; a trava
+   definitiva do banco de dados é feita pelas Regras do Firestore no console do Firebase. */
+var ADMIN={salt:'5c4d90f0e7cbde07ef87d4d0aeda8eca',it:150000,hash:'8360412bd78b312b5567fbe772beb478a19bf1d01aae5df58d19dbcd571aa0b8'};
+var admMem=false,admFalhas=0,admBloqAte=0;
+function isAdmin(){try{return sessionStorage.getItem('proact-adm')==='1'}catch(e){return admMem}}
+function hexDe(buf){return Array.prototype.map.call(new Uint8Array(buf),function(b){return ('0'+b.toString(16)).slice(-2)}).join('')}
+function bytesDe(h){var a=new Uint8Array(h.length/2);for(var i=0;i<a.length;i++)a[i]=parseInt(h.substr(i*2,2),16);return a}
+async function derivarSenha(pw){
+  var sub=window.crypto&&window.crypto.subtle;
+  if(!sub)throw new Error('sem-crypto');
+  var key=await sub.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveBits']);
+  var bits=await sub.deriveBits({name:'PBKDF2',hash:'SHA-256',salt:bytesDe(ADMIN.salt),iterations:ADMIN.it},key,256);
+  return hexDe(bits);
+}
+async function entrarAdmin(pw){
+  if(Date.now()<admBloqAte)throw new Error('espere');
+  var h=await derivarSenha(pw);
+  if(h!==ADMIN.hash){admFalhas++;if(admFalhas>=5){admBloqAte=Date.now()+30000;admFalhas=0}return false}
+  admFalhas=0;admMem=true;
+  try{sessionStorage.setItem('proact-adm','1')}catch(e){}
+  return true;
+}
+function sairAdmin(){
+  try{sessionStorage.removeItem('proact-adm')}catch(e){}
+  admMem=false;refreshAdminUI();toast('Modo administrador desativado.');
+}
+function refreshAdminUI(){
+  var a=isAdmin();
+  document.body.classList.toggle('is-adm',a);
+  $('admEntrar').hidden=a;$('admTag').hidden=!a;$('admSair').hidden=!a;
+  $('admAreas').hidden=!(a&&!!db);
+  $('acGerar').hidden=!a;
+  $('acDica').textContent=a
+    ?'Equipe nova: toque em Gerar código novo, entre e use Copiar link da equipe para enviar aos outros turnos. Quem tiver o link vê e edita tudo.'
+    :'Peça ao administrador o link ou o código da equipe. Quem tiver o link vê e edita tudo.';
+  if(!a){$('areasBox').hidden=true;$('novaEqBox').hidden=true;$('admBox').hidden=true}
+}
+function msgEspera(){return Date.now()<admBloqAte?'Muitas tentativas. Aguarde 30 segundos.':'Senha incorreta.'}
+$('admEntrar').addEventListener('click',function(){$('admBox').hidden=false;$('admSenha').value='';$('admSenha').focus()});
+$('admCancel').addEventListener('click',function(){$('admBox').hidden=true});
+$('admSair').addEventListener('click',sairAdmin);
+$('admBox').addEventListener('submit',async function(e){
+  e.preventDefault();
+  var pw=$('admSenha').value;if(!pw)return;
+  try{
+    var ok=await entrarAdmin(pw);
+    if(ok){$('admBox').hidden=true;$('admSenha').value='';refreshAdminUI();toast('Modo administrador ativado.')}
+    else toast(msgEspera());
+  }catch(err){
+    toast(err&&err.message==='espere'?'Muitas tentativas. Aguarde 30 segundos.':'Este navegador não permite validar a senha. Abra o painel pelo link publicado (https).');
+  }
+});
+$('novaEqOk').addEventListener('click',function(){
+  if(!isAdmin()||!db)return;
+  $('novaEqBox').hidden=true;estado.textContent='Criando equipe…';criarPrimeiroDia();
+});
+$('novaEqCancel').addEventListener('click',function(){$('novaEqBox').hidden=true;lsSet('proact-codigo','');mostrarAcesso()});
+
+function renderAreasBox(){
+  var l=$('areaLista');if(!l)return;
+  l.textContent='';
+  todasAreas().forEach(function(a){
+    var el=document.createElement('div');el.className='area-i';
+    var t=document.createElement('div');
+    var b=document.createElement('b');b.textContent=a.nome;
+    var sm=document.createElement('small');
+    var n=(a.itens||[]).length;
+    sm.textContent=a.base?' · Área padrão':' · Criada pelo administrador'+(n?' · '+n+(n===1?' item':' itens'):'');
+    t.appendChild(b);t.appendChild(sm);el.appendChild(t);
+    if(!a.base){
+      var r=document.createElement('button');r.type='button';r.className='btn dng';r.textContent='Remover área';r.dataset.rmArea=a.p;
+      el.appendChild(r);
+    }
+    l.appendChild(el);
+  });
+}
+async function adicionarArea(nome,itens){
+  var slug=semAcento(nome).replace(/[^a-z0-9]/g,'').slice(0,12)||'area';
+  var p='x'+slug+Date.now().toString(36).slice(-4);
+  var ref=rawdb.doc(P('config/areas'));
+  await rawdb.runTransaction(async function(tx){
+    var s=await tx.get(ref);
+    var l=(s.exists&&s.data()&&Array.isArray(s.data().lista))?s.data().lista.slice():[];
+    l.push({p:p,nome:nome,itens:itens,criadoEm:Date.now()});
+    tx.set(ref,{lista:l});
+  });
+}
+async function removerArea(p){
+  var ref=rawdb.doc(P('config/areas'));
+  try{
+    await rawdb.runTransaction(async function(tx){
+      var s=await tx.get(ref);
+      var l=(s.exists&&s.data()&&Array.isArray(s.data().lista))?s.data().lista:[];
+      tx.set(ref,{lista:l.filter(function(a){return a&&a.p!==p})});
+    });
+    toast('Área removida. O que já foi lançado continua nos relatórios salvos.');
+  }catch(e){console.error(e);toast('Não foi possível remover a área.')}
+}
+$('admAreas').addEventListener('click',function(){
+  if(!isAdmin())return;
+  var b=$('areasBox');b.hidden=!b.hidden;
+  if(!b.hidden){renderAreasBox();$('areaNome').focus()}
+});
+$('areasFechar').addEventListener('click',function(){$('areasBox').hidden=true});
+$('areaLista').addEventListener('click',function(e){
+  var b=e.target.closest('button[data-rm-area]');if(!b||!isAdmin())return;
+  if(b.dataset.armed){clearTimeout(b._t);removerArea(b.dataset.rmArea);return}
+  b.dataset.armed='1';b.textContent='Confirmar remoção';b.classList.add('armed');
+  b._t=setTimeout(function(){b.dataset.armed='';b.textContent='Remover área';b.classList.remove('armed')},4000);
+});
+$('areaForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  if(!isAdmin()||!db)return;
+  var nome=$('areaNome').value.trim().replace(/\s+/g,' ');
+  var itens=$('areaItens').value.split('\n').map(function(x){return x.trim().replace(/\s+/g,' ')}).filter(Boolean);
+  if(nome.length<2){toast('Digite o nome da área.');$('areaNome').focus();return}
+  if(todasAreas().some(function(a){return semAcento(a.nome)===semAcento(nome)})){toast('Já existe uma área com esse nome.');return}
+  if(itens.length>10){toast('Use no máximo 10 itens.');return}
+  if(itens.some(function(x){return x.length>60})){toast('Cada item pode ter até 60 caracteres.');return}
+  adicionarArea(nome,itens).then(function(){
+    $('areaNome').value='';$('areaItens').value='';
+    toast('Área '+nome+' adicionada a todas as linhas.');
+  },function(err){
+    console.error(err);toast('Não foi possível salvar a área. Confira as Regras do Firestore para config/areas.');
+  });
+});
 
 /* ---------- Acesso: nome + código da equipe (o código faz parte do caminho no banco) ---------- */
 function P(p){return 'equipes/'+CODE+'/'+p}
@@ -1105,7 +1580,7 @@ function mostrarAcesso(){
   $('acNome').value=lsGet('proact-nome');$('acCodigo').value=codigoInicial();
   $('acesso').hidden=false;($('acNome').value?$('acCodigo'):$('acNome')).focus();
 }
-$('acGerar').addEventListener('click',function(){$('acCodigo').value=novoCodigo()});
+$('acGerar').addEventListener('click',function(){if(!isAdmin())return;$('acCodigo').value=novoCodigo()});
 $('acesso').addEventListener('submit',function(e){
   e.preventDefault();
   var n=$('acNome').value.trim(),c=$('acCodigo').value.trim();
@@ -1123,7 +1598,7 @@ $('linkEq').addEventListener('click',function(){
 
 /* ---------- Início ---------- */
 (function(){
-  setSync('loading');showEstado();
+  setSync('loading');showEstado();refreshAdminUI();
   document.body.classList.add('ro');
   var cfg=window.PROACT_CONFIG||{};
   if(!cfg.projectId||cfg.projectId==='COLE_AQUI'){
@@ -1141,7 +1616,7 @@ $('linkEq').addEventListener('click',function(){
   }catch(e){console.error(e);setSync('error');estado.textContent='Configuração do Firebase inválida.';return}
   db={collection:function(p){return rawdb.collection(P(p))},doc:function(p){return rawdb.doc(P(p))}};
   $('eu').textContent='Você: '+nome;$('trocar').hidden=false;$('linkEq').hidden=false;
-  setRO(false);store=mkStore();
+  setRO(false);store=mkStore();refreshAdminUI();
   observarConfig();
 })();
 })();
